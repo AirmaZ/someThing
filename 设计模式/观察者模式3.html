@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    function Event() {
+        // 通过on接口监听事件eventName
+        // 如果事件eventName被触发，则执行callback回调函数
+        this.on = function (eventName, callback) {
+            this[eventName] = this[eventName] || [];
+            this[eventName].push(callback)
+        };
+        this.off = function (eventName, callback) {
+            if(!eventName || !this[eventName]) return console.error('事件不存在');
+            var eventFn = this[eventName];
+            for(var i = 0; i < eventFn.length ; i ++) {
+                if(eventFn[i] == callback){
+                    this[eventName].splice(i,1);
+                    i--;
+                }
+            }
+        };
+        // 触发事件 eventName
+        this.emit = function (eventName , params) {
+            if(!eventName || !this[eventName]) return console.error('事件不存在');
+            var eventFn = this[eventName];
+            for(var i = 0; i < eventFn.length ; i ++) {
+                eventFn[i](params);
+            }
+        }
+    }
+
+    var person1 = new Event();
+    var person2 = new Event();
+    var person3 = new Event();
+    person1.on('test',function () {
+        console.log('test事件1,person1')
+    });
+    person1.on('test',function (params) {
+        console.log('test事件2,person1,参数：'+params)
+    });
+    person1.on('push',function (params) {
+        console.log('push事件,person1,参数：'+params)
+    });
+    person2.on('test',function () {
+        console.log('test事件1,person2')
+    });
+    person2.on('test',function (params) {
+        console.log('test事件2,person2,参数：'+params)
+    });
+
+    person3.on('test',function () {
+        console.log('test事件1，person3');
+    });
+
+    var persion3Test = function () {
+        console.log('test事件2，person3');
+    };
+    person3.on('test',persion3Test);
+    person3.on('test',persion3Test);
+    person3.on('test',function () {
+        console.log('test事件3，person3');
+    })
+</script>
+</body>
+</html>

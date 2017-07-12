@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="testTime(bubbleSort1)">bubbleSort1</button>
+<button onclick="testTime(bubbleSort2)">bubbleSort2</button>
+<button onclick="testTime(bubbleSort3)">bubbleSort3</button>
+<button onclick="testTime(SelectionSort)">SelectionSort</button>
+<button onclick="testTime(insertionSort)">insertionSort</button>
+<button onclick="testTime(Sort)">sort</button>
+</body>
+
+<script>
+    var defaultArray = [];
+    for(var num = 0; num < 100000; num ++){
+        defaultArray.push(parseInt(Math.random()*10000));
+    }
+
+    function testTime(testFunction) {
+        var array = defaultArray.slice(0);
+        var beginTime = new Date().getTime();
+        testFunction(array);
+        console.log("算法时间："+(new Date().getTime()-beginTime))
+    }
+
+    /**
+     * 插入排序
+     */
+    function insertionSort(array) {
+        var length = array.length-1;
+        var min;
+        for (var i =0; i < length-1 ; i ++){
+            min = array[i+1];
+            for (var j =i ; j >= 0; j --){
+                if(min < array[j]){
+                    var item = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = item;
+                } else break;
+            }
+        }
+        console.log(array);
+    }
+
+    /**
+     * 选择排序
+     */
+    function SelectionSort(array) {
+        var minIndex;
+        var length = array.length-1;
+        for(var j =0; j<=length ;j ++){
+            minIndex = j;
+            for (var i =j ;i <= length; i++){
+                if(array[i] < array[minIndex]){
+                    minIndex = i;
+                }
+            }
+            var item = array[minIndex];
+            array[minIndex] = array[j];
+            array[j] = item;
+        }
+        console.log(array);
+    }
+
+    /**
+     * 冒泡法1
+     */
+    function bubbleSort1(array) {
+        for(var i = 0; i < array.length; i++){
+            for(var j =0; j<array.length-1-i;j++){
+                if(array[j]>array[j+1]){
+                    var item = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = item;
+                }
+            }
+        }
+        console.log(array);
+    }
+
+    /**
+     * 冒泡法2
+     */
+    function bubbleSort2(array) {
+        var i = array.length-1;
+        while(i>0){
+            var index =0;
+            for(var j =0; j<i ;j ++){
+                if(array[j]>array[j+1]){
+                    index = j;
+                    var item = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = item;
+                }
+            }
+            i = index;
+        }
+        console.log(array);
+    }
+
+    /**
+     * 冒泡法3
+     */
+    function bubbleSort3(array) {
+        var min = 0;
+        var max = array.length-1;
+        while(min < max){
+            for(var i =max ; i > min; i--){
+                if(array[i]<array[i-1]){
+                    var item1 = array[i-1];
+                    array[i-1] = array[i];
+                    array[i] = item1;
+                }
+            }
+            max -- ;
+            for(var j = min ;j < max ;j++){
+                if(array[j]>array[j+1]){
+                    var item2 = array[j+1];
+                    array[j+1] = array[j];
+                    array[j] = item2;
+                }
+            }
+            min ++;
+        }
+        console.log(array);
+    }
+
+    /**
+     * 原生sort排序
+     */
+    function Sort(array) {
+        function sortFc(a,b) {
+            return a-b;
+        }
+        array.sort(sortFc);
+        console.log(array);
+    }
+
+</script>
+</html>

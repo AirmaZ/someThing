@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var Event = {
+        // 通过on接口监听事件eventName
+        // 如果事件eventName被触发，则执行callback回调函数
+        on: function (eventName, callback) {
+            this[eventName] = this[eventName] || [];
+            this[eventName].push(callback)
+        },
+        // 触发事件 eventName
+        emit: function (eventName , params) {
+            if(!eventName || !this[eventName]) return console.error('事件不存在');
+            var eventFn = this[eventName];
+            for(var i = 0; i < eventFn.length ; i ++) {
+                eventFn[i](params);
+            }
+        }
+    };
+
+    Event.on('test', function () {
+        console.log('test事件1');
+    });
+    Event.on('test', function (params) {
+        console.log('test事件2   参数：'+params);
+    });
+
+    Event.on('push', function () {
+        console.log('push事件');
+    });
+
+    Event.emit('test','参数为123');
+    setTimeout(function () {
+        Event.emit('push')
+    },3000)
+</script>
+</body>
+</html>

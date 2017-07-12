@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+//    function Person(name,city) {
+//        this.name = name;
+//        this.city = city;
+//    }
+//    Person.prototype.getCity = function () {
+//        return this.city
+//    };
+//
+//    var xiaoming = new Person("小明","合肥");
+//    var xiaohong = new Person("小红","北京");
+//    console.log(xiaoming);
+//    console.log(xiaohong);
+
+
+    function BicycleShop(name,A,B) {
+        this.name = name;
+        this.method = function(){
+            return this.name;
+        };
+        this.A = A;
+        this.B = B;
+        this.CreateBicycle = function (A,B) {
+            this.name = name;
+            this.method = function(){
+                return this.name;
+            };
+            this.A = A;
+            this.B = B;
+        };
+    }
+
+    BicycleShop.prototype.sellBicycle = function () {
+        var bicycle = new this.CreateBicycle(this.A,this.B);
+        bicycle.A();
+        bicycle.B();
+        return bicycle;
+    };
+
+    var A = function () {
+        console.log('业务A');
+    };
+    var B = function () {
+        console.log('业务B');
+    };
+
+    //实例化
+    var haha = new BicycleShop("捷安特",A,B).sellBicycle();
+    console.log(haha);
+</script>
+</body>
+</html>

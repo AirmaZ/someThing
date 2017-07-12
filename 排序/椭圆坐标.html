@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #input{
+        color: red;
+    }
+</style>
+<body>
+<input id="input" type="text" value="default">
+<script>
+    function getPointByEllipse(ox, oy, a, b, count) {
+        var point = []; //结果
+        var deg = 360 / count ;//角度
+        for (var i = 1; i <= count; i++) {
+            var x=a*Math.cos(deg*i)+ox,
+                y = b*Math.sin(deg*i)+oy;
+            point.push({x: x, y: y}); //为保持数据顺时针
+        }
+        console.log(point);
+        return point;
+    }
+    console.log(getPointByEllipse(5,5,5,5,3))
+</script>
+</body>
+</html>

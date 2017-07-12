@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="canvas">不支持canvas</canvas>
+</body>
+
+<script>
+
+    function getPointByEllipse(ox, oy, a, b, count , animate) {
+        var point = []; //结果
+        var deg = (Math.PI / 180) * Math.round(360 / count)+ animate;//角度
+        for (var i = 1; i <= count; i++) {
+            var x=a*Math.cos(deg*i)+ox,
+                y = b*Math.sin(deg*i)+oy;
+            point.push({x: x, y: y}); //为保持数据顺时针
+        }
+        return point;
+    }
+    function getPathPoint(P0,P1,P2,t) {
+        var x = (1 - t)*(1 - t)*P0[0]+2*t*(1-t)*P1[0]+t*t*P2[0];
+        var y= (1 - t)*(1 - t)*P0[1]+2*t*(1-t)*P1[1]+t*t*P2[1];
+        return [x,y]
+    }
+    function drawPoint(ctx, x, y, radius, color) {
+        ctx.save();
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.closePath();
+        ctx.restore();
+    }
+    var canvas = document.getElementById("canvas");
+    canvas.height = 300;
+    canvas.width = 400;
+    var cxt = canvas.getContext("2d");
+//    cxt.beginPath();
+//    cxt.moveTo(20,170);
+//    cxt.lineTo(130,40);
+//    cxt.lineTo(180,150);
+//    cxt.stroke();
+    cxt.strokeStyle = "rgba(255,0,0,1)";
+    var adnimate = 0.01;
+    window.setInterval(function () {
+        var point = getPointByEllipse(150,150,100,30,8,adnimate+=0.005);
+        cxt.clearRect(0, 0, 300, 400);
+        for(var i = 0; i <point.length; i++){
+            drawPoint(cxt,point[i].x,point[i].y,3,'00f');
+        }
+    },10);
+
+
+    //绘制2次贝塞尔曲线
+</script>
+</html>

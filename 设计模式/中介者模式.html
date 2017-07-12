@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Hero(name) {
+        this.name = name;
+        this.enemy = null;
+    }
+    Hero.prototype.win = function(){
+        console.log(this.name + 'Won');
+    };
+    Hero.prototype.lose = function(){
+        console.log(this.name + 'lose');
+    };
+    Hero.prototype.die = function(){
+        this.lose();
+        this.enemy.win();
+    };
+    // 初始化2个对象
+    var h1 = new Hero("朱元璋");
+    var h2 = new Hero("刘伯温");
+    // 给玩家设置敌人
+    h1.enemy = h2;
+    h2.enemy = h1;
+    // 朱元璋死了 也就输了
+    h1.die();  // 输出 朱元璋lose 刘伯温Won
+
+
+</script>
+</body>
+</html>
